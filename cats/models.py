@@ -22,7 +22,16 @@ class Cat(models.Model):
     birth_year = models.IntegerField()
     owner = models.ForeignKey(
         Owner, related_name='cats', on_delete=models.CASCADE)
-    ahivement = models.ManyToManyField(Achievement, through='AchivementCat')
+    achievements = models.ManyToManyField(
+        Achievement, through='AchievementCat')
 
     def __str__(self):
         return self.name
+
+
+class AchievementCat(models.Model):
+    achievement = models.ForeignKey(Achievement, on_delete=models.CASCADE)
+    cat = models.ForeignKey(Cat, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.achievement} {self.cat}'
